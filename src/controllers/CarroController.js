@@ -9,13 +9,27 @@ async function buscarTodos(req, res) {
 
     for (let i in carros) {
         json.result.push({
-            codigo: carros[i].codigo,
+            id: carros[i].id,
             descricao: carros[i].modelo
         })
     }
     res.json(json);
 };
 
+async function buscarUm(req, res) {
+    let json = {error:'', result:{}};
+
+    let id = req.params.id;
+    let carro = await carroService.buscarUm(id);
+
+    if (carro) {
+        json.result = carro;
+    }
+
+    res.json(json);
+}
+
 module.exports = {
-    buscarTodos
+    buscarTodos,
+    buscarUm
 };

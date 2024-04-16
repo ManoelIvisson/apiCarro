@@ -13,6 +13,24 @@ function buscarTodos() {
     });
 }
 
+function buscarUm(id) {
+    return new Promise((aceito, rejeitado) => {
+        db.query('SELECT * FROM carros WHERE id = ?', [id], (error, results) => {
+            if (error) {
+                rejeitado(error);
+                return;
+            }
+
+            if (results.length >= 0) {
+                aceito(results[0]);
+            } else {
+                aceito(false);
+            }
+        })
+    })
+}
+
 module.exports = {
-    buscarTodos
+    buscarTodos,
+    buscarUm
 }
