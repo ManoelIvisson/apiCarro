@@ -54,9 +54,22 @@ function alterar(id, modelo, placa) {
     })
 }
 
+function excluir(id) {
+    return new Promise((aceito, rejeitado) => {
+        db.query('DELETE FROM carros WHERE id = ?', [id], (error, results) => {
+            if (error) {
+                rejeitado(error);
+                return;
+            }
+            aceito(results);
+        })
+    }) 
+}
+
 module.exports = {
     buscarTodos,
     buscarUm,
     inserir,
-    alterar
+    alterar,
+    excluir
 }

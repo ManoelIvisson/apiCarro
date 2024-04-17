@@ -5,8 +5,6 @@ async function buscarTodos(req, res) {
 
     let carros = await carroService.buscarTodos();
 
-    // console.log(carros);
-
     for (let i in carros) {
         json.result.push({
             id: carros[i].id,
@@ -70,9 +68,21 @@ async function alterar(req, res) {
     res.json(json);
 }
 
+async function excluir(req, res) {
+    let json = {error:'', result:{}};
+
+    let id = req.params.id;
+
+    json.result = await carroService.buscarUm(id)
+    await carroService.excluir(id);
+
+    res.json(json);
+}
+
 module.exports = {
     buscarTodos,
     buscarUm,
     inserir,
-    alterar
+    alterar,
+    excluir
 };
