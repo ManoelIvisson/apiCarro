@@ -30,7 +30,20 @@ function buscarUm(id) {
     })
 }
 
+function inserir(modelo, placa) {
+    return new Promise((aceito, rejeitado) => {
+        db.query(`INSERT INTO carros (modelo, placa) VALUES (?, ?)`, [modelo, placa], (error, results) => {
+            if (error) {
+                rejeitado(error);
+                return;
+            }
+            aceito(results.insertId);
+        })
+    })
+}
+
 module.exports = {
     buscarTodos,
-    buscarUm
+    buscarUm,
+    inserir
 }

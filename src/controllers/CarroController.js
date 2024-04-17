@@ -29,7 +29,28 @@ async function buscarUm(req, res) {
     res.json(json);
 }
 
+async function inserir(req, res) {
+    let json = {error:'', result:{}};
+
+    let modelo = req.body.modelo;
+    let placa = req.body.placa;
+
+    if (modelo && placa) {
+        let CarroId = await carroService.inserir(modelo, placa);
+        json.result = {
+            id: CarroId,
+            modelo: modelo,
+            placa
+        };
+    } else {
+        json.error = "Campos não preenchidos";
+    }
+
+    res.json(json);
+}
+
 module.exports = {
     buscarTodos,
-    buscarUm
+    buscarUm,
+    inserir
 };
