@@ -49,8 +49,30 @@ async function inserir(req, res) {
     res.json(json);
 }
 
+async function alterar(req, res) {
+    let json = {error:'', result:{}};
+
+    let id = req.params.id;
+    let modelo = req.body.modelo;
+    let placa = req.body.placa;
+
+    if (id && modelo && placa) {
+        await carroService.alterar(id, modelo, placa);
+        json.result = {
+            id,
+            modelo,
+            placa
+        }
+    } else {
+        json.error = "Campos não preenchidos ou incorretos";
+    }
+
+    res.json(json);
+}
+
 module.exports = {
     buscarTodos,
     buscarUm,
-    inserir
+    inserir,
+    alterar
 };
